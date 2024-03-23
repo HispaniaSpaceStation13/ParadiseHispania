@@ -2869,6 +2869,7 @@
 #include "modularHispania\code\game\jobs\modularAccess\access_override.dm"
 #include "modularHispania\code\game\objects\items\weapons\auto_piecannon.dm"
 #include "modularHispania\code\modules\food_and_drinks\food\baked_goods_hispania.dm"
+#include "modularHispania\code\modules\food_and_drinks\recipes\recipes_oven.dm"
 #include "modularHispania\code\modules\guns\hispania_ka.dm"
 #include "modularHispania\code\modules\modularclothing\hispania_armor.dm"
 #include "modularHispania\code\modules\modularclothing\hispania_boots.dm"
