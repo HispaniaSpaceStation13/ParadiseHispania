@@ -1,4 +1,4 @@
-/obj/item/food/snacks/pie/throw_impact(atom/hit_atom)
+/obj/item/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/L = hit_atom
 		L.Weaken(2 SECONDS)
