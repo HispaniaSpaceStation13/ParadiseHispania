@@ -152,6 +152,108 @@
 	bio_chips = list(/obj/item/bio_chip/mindshield)
 	return ..()
 
+//Ya que estan los mindshields arriba, aprovecho para poner los protected jobs de los antags
+
+/datum/game_mode/traitor/
+	protected_jobs = list(
+	"Security Officer",
+	"Warden",
+	"Detective",
+	"Head of Security",
+	"Captain",
+	"Head of Personnel",
+	"Research Director",
+	"Chief Engineer",
+	"Chief Medical Officer",
+	"Blueshield",
+	"Nanotrasen Representative",
+	"Magistrate",
+	"Internal Affairs Agent",
+	"Nanotrasen Navy Officer",
+	"Special Operations Officer",
+	"Quartermaster",
+	"Syndicate Officer")
+
+/datum/game_mode/changeling/
+	protected_jobs = list(
+	"Security Officer",
+	"Warden",
+	"Detective",
+	"Head of Security",
+	"Captain",
+	"Head of Personnel",
+	"Research Director",
+	"Chief Engineer",
+	"Chief Medical Officer",
+	"Blueshield",
+	"Nanotrasen Representative",
+	"Magistrate",
+	"Internal Affairs Agent",
+	"Nanotrasen Navy Officer",
+	"Special Operations Officer",
+	"Quartermaster",
+	"Syndicate Officer")
+
+/datum/game_mode/vampire/
+	protected_jobs = list(
+	"Security Officer",
+	"Warden",
+	"Detective",
+	"Head of Security",
+	"Captain",
+	"Head of Personnel",
+	"Research Director",
+	"Chief Engineer",
+	"Chief Medical Officer",
+	"Blueshield",
+	"Nanotrasen Representative",
+	"Magistrate",
+	"Internal Affairs Agent",
+	"Nanotrasen Navy Officer",
+	"Special Operations Officer",
+	"Quartermaster",
+	"Syndicate Officer")
+
+/datum/game_mode/blob/
+	protected_jobs = list(
+	"Security Officer",
+	"Warden",
+	"Detective",
+	"Head of Security",
+	"Captain",
+	"Head of Personnel",
+	"Research Director",
+	"Chief Engineer",
+	"Chief Medical Officer",
+	"Blueshield",
+	"Nanotrasen Representative",
+	"Magistrate",
+	"Internal Affairs Agent",
+	"Nanotrasen Navy Officer",
+	"Special Operations Officer",
+	"Quartermaster",
+	"Syndicate Officer")
+
+/datum/game_mode/cult/
+	protected_jobs = list(
+	"Security Officer",
+	"Warden",
+	"Detective",
+	"Head of Security",
+	"Captain",
+	"Head of Personnel",
+	"Research Director",
+	"Chief Engineer",
+	"Chief Medical Officer",
+	"Blueshield",
+	"Nanotrasen Representative",
+	"Magistrate",
+	"Internal Affairs Agent",
+	"Nanotrasen Navy Officer",
+	"Special Operations Officer",
+	"Syndicate Officer",
+	"Quartermaster",
+	"Chaplain")
 
 ///The end :)
 
