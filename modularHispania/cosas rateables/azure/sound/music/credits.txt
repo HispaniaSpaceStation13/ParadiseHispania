@@ -1,0 +1,25 @@
+combat_maniac2.ogg: Thomas Bangalter - Stress
+combat_vamp2.ogg: Filmmaker - Mystic Circles
+combat_merchant.ogg: Neospherix Project - Hava Nagila (Psychedelic Trance)
+combat_desertrider.ogg: Two Fingers- You Ain't Down
+combat_grenzelhoft.ogg: Helbrede - Sons of Tyr
+combat_jester.ogg: OFF - Pepper Steak
+combat_bandit.ogg: Deus Ex - Battery Park Combat
+combat_bandit2.ogg: Cruelty Squad  - Rent DUe
+combat_werewolf.ogg: Filmmaker - Federal Bestiary
+combat_guard.ogg: Deus Ex - Desolation Combat
+combat_guard2.ogg: Deus Ex - NYC Streets Combat
+combat_physician.ogg: Pathologic (Classic) - Utroba Aggression
+combat_bum.ogg: Pathologic (Classic) - Most Combat Theme
+combat_clergy.ogg: Fear & Hunger 2: Termina - Mataneko-Kone Magnificat
+combat.ogg: Domina - Mire
+combat_guard.ogg: Domina - Spartacus
+combat_knight.ogg: Battle Brothers - Laying Siege to Hammerburg
+combat_tribal.ogg: Battle Brothers - Black Iron Pact
+combat_vamp.ogg: Battle Brothers - Curse of the Emperor
+combat_squire.ogg: Exanima - Term'd
+combat_weird.ogg: Filmmaker - Counterspell
+bog.ogg: Kenshi - Bog
+manorgarri.ogg: Exanima - Arena Hub
+combat_steppe: Tatar Theme(Hellish Quart OST)
+roundend-vote-sound.ogg: https://www.youtube.com/watch?v=uV0UG0cwGGs
