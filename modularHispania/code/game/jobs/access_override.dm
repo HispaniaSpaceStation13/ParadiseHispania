@@ -32,11 +32,11 @@
 	access = list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_MAINT_TUNNELS)
 	return ..()
 
-/datum/job/bartender/New()
+/datum/job/chef/New()
 	access = list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_MAINT_TUNNELS)
 	return ..()
 
-/datum/job/bartender/New()
+/datum/job/hydro/New()
 	access = list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_MAINT_TUNNELS)
 	return ..()
 
