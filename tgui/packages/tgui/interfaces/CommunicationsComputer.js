@@ -239,7 +239,7 @@ const PlayerPage = (props, context) => {
               {str_security_level}
             </LabeledList.Item>
             <LabeledList.Item label="Change Alert">
-              <MappedAlertLevelButtons levels={levels} required_access={authcapt} />
+              <MappedAlertLevelButtons levels={levels} required_access={authhead} />
             </LabeledList.Item>
             <LabeledList.Item label="Announcement">
               <Button
