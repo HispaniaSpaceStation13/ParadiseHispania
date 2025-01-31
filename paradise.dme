@@ -3070,5 +3070,6 @@
 #include "code\tests\game_tests.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
+#include "modularHispania\code\datums\uplink_items\uplink_traitor.dm"
 #include "modularHispania\code\game\jobs\access_override.dm"
 // END_INCLUDE
