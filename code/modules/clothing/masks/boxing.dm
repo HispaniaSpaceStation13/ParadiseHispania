@@ -51,8 +51,3 @@
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon_state = "luchar"
 	item_state = "luchar"
-/obj/item/clothing/mask/luchador/dealer
-	name = "dealer"
-	desc = "...."
-	icon_state = "dealer_mask"
-	item_state = "dealer_mask"
