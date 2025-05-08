@@ -25,7 +25,6 @@
 		for(var/datum/alternate_appearance/AA in viewing_alternate_appearances)
 			AA.viewers -= src
 		viewing_alternate_appearances = null
-	LAssailant = null
 	runechat_msg_location = null
 	if(length(observers))
 		for(var/mob/dead/observe as anything in observers)
@@ -259,7 +258,12 @@
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = FALSE, disable_warning = FALSE, initial = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return FALSE
+
+	if(W.flags & NODROP)
+		to_chat(src, "<span class='warning'>[W] is stuck to your hand!</span>")
+		return FALSE
 
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(del_on_fail)
@@ -268,10 +272,10 @@
 			if(!disable_warning)
 				to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if del_on_fail is false
 
-		return 0
+		return FALSE
 
 	equip_to_slot(W, slot, initial) //This proc should not ever fail.
-	return 1
+	return TRUE
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
@@ -1059,6 +1063,12 @@ GLOBAL_LIST_INIT(slot_equipment_priority, list( \
 				continue
 			if(L.npc_safe(src) && L.stat != DEAD && !L.key)
 				creatures += L
+		// Dumb duplicate code until we have no more simple mobs
+		for(var/mob/living/basic/B in GLOB.alive_mob_list)
+			if(!(is_station_level(B.z) || is_admin_level(B.z))) // Prevents players from spawning in space
+				continue
+			if(B.valid_respawn_target_for(src) && B.stat != DEAD && !B.key)
+				creatures += B
 		var/picked = tgui_input_list(usr, "Please select an NPC to respawn as", "Respawn as NPC", creatures)
 		switch(picked)
 			if("Mouse")
@@ -1102,6 +1112,10 @@ GLOBAL_LIST_INIT(slot_equipment_priority, list( \
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
 		return mind.get_ghost(even_if_they_cant_reenter)
+
+/mob/proc/check_ghost_client()
+	if(mind)
+		return mind.check_ghost_client()
 
 /mob/proc/grab_ghost(force)
 	if(mind)
@@ -1607,3 +1621,16 @@ GLOBAL_LIST_INIT(holy_areas, typecacheof(list(
 
 /mob/living/proc/remove_recent_magic_block()
 	REMOVE_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT)
+
+/mob/living/proc/adjustHealth(amount, updating_health = TRUE)
+	if(status_flags & GODMODE)
+		return FALSE
+	var/oldbruteloss = bruteloss
+	bruteloss = clamp(bruteloss + amount, 0, maxHealth)
+	if(oldbruteloss == bruteloss)
+		updating_health = FALSE
+		. = STATUS_UPDATE_NONE
+	else
+		. = STATUS_UPDATE_HEALTH
+	if(updating_health)
+		updatehealth()
