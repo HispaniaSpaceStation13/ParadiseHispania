@@ -6,7 +6,6 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	origin_tech = "biotech=4;magnets=6"
-	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
@@ -81,7 +80,6 @@
 	icon = 'icons/obj/mobcap.dmi'
 	icon_state = "mobcap0"
 	w_class = WEIGHT_CLASS_TINY
-	throw_range = 7
 	var/mob/living/simple_animal/captured = null
 	var/colorindex = 0
 	var/capture_type = SENTIENCE_ORGANIC //So you can't capture boss monsters or robots with it
@@ -104,9 +102,13 @@
 	else
 		if("neutral" in S.faction)
 			S.forceMove(src)
-			S.name = "[M.name]'s [initial(S.name)]"
+			var/obj/item/petcollar/collar = S.get_item_by_slot(ITEM_SLOT_COLLAR)
+			if(collar)
+				name = "Lazarus Capsule: [S.name]"
+			else
+				S.name = "[M.name]'s [initial(S.name)]"
+				name = "Lazarus Capsule: [initial(S.name)]"
 			S.cancel_camera()
-			name = "Lazarus Capsule: [initial(S.name)]"
 			to_chat(M, "<span class='notice'>You placed a [S.name] inside the Lazarus Capsule!</span>")
 			captured = S
 		else

@@ -107,7 +107,6 @@
 	desc = "The circuit board for an Industrial Suit Storage Unit."
 	id = "issu"
 	req_tech = list("engineering" = 5, "materials" = 4)
-	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
 	build_path = /obj/item/circuitboard/suit_storage_unit/industrial
 	category = list("Engineering Machinery")
@@ -582,6 +581,16 @@
 	build_path = /obj/item/circuitboard/kinetic_assembler
 	category = list ("Misc. Machinery")
 
+/datum/design/scientific_assembler
+	name = "Machine Design (Scientific Assembler)"
+	desc = "The circuit board for a Scientific Assembler."
+	id = "scientific_assembler"
+	req_tech = list("programming" = 2, "engineering" = 4, "plasmatech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000)
+	build_path = /obj/item/circuitboard/scientific_assembler
+	category = list ("Misc. Machinery")
+
 /datum/design/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vendor Board)"
 	desc = "The circuit board for a Mining Rewards Vendor."
@@ -710,3 +719,13 @@
 	materials = list(MAT_GLASS = 1000)
 	build_path = /obj/item/circuitboard/autochef
 	category = list("Misc. Machinery")
+
+/datum/design/organ_analyzer
+	name = "Machine Design (Organ Analyzer)"
+	desc = "The circuit board for an organ analyzer."
+	id = "organ_analyzer"
+	req_tech = list("programming" = 3, "bluespace" = 3, "materials" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000)
+	build_path = /obj/item/circuitboard/organ_analyzer
+	category = list("Research Machinery")

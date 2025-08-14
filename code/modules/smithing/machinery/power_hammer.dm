@@ -1,8 +1,6 @@
 /obj/machinery/smithing/power_hammer
 	name = "power hammer"
 	desc = "A heavy-duty pneumatic hammer designed to shape and mold molten metal."
-	icon = 'icons/obj/machines/large_smithing_machines.dmi'
-	icon_state = "power_hammer"
 	operation_sound = 'sound/magic/fellowship_armory.ogg'
 
 /obj/machinery/smithing/power_hammer/Initialize(mapload)
@@ -48,7 +46,7 @@
 
 /obj/machinery/smithing/power_hammer/operate(loops, mob/living/user)
 	if(!working_component)
-		to_chat(user, "<span class='notice'>There is no component in the machine.</span>")
+		to_chat(user, "<span class='notice'>There is no component to hammer!</span>")
 		return
 	if(!working_component.heat)
 		to_chat(user, "<span class='notice'>[working_component] is too cold to properly shape.</span>")
@@ -79,6 +77,9 @@
 
 /obj/machinery/smithing/power_hammer/attack_hand(mob/user)
 	. = ..()
+	if(!allowed(user) && !isobserver(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return FINISH_ATTACK
 	if(operating)
 		to_chat(user, "<span class='warning'>[src] is currently operating!</span>")
 		return

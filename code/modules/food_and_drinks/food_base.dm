@@ -148,6 +148,16 @@
 /obj/item/food/proc/On_Consume(mob/M, mob/user)
 	if(!user)
 		return
+	// Add viruses where needed
+	if(length(M.viruses))
+		AddComponent(/datum/component/viral_contamination, M.viruses)
+	var/datum/reagent/blood/blood_contained = locate() in reagents.reagent_list
+	// Infect contained blood as well for splash reactions
+	if(blood_contained?.data["viruses"])
+		var/list/blood_viruses = blood_contained.data["viruses"]
+		blood_viruses |= M.viruses.Copy()
+		blood_contained.data["viruses"] = blood_viruses
+	SEND_SIGNAL(src, COMSIG_MOB_REAGENT_EXCHANGE, M)
 	if(!reagents.total_volume)
 		if(M == user)
 			to_chat(user, "<span class='notice'>You finish eating [src].</span>")
@@ -330,7 +340,7 @@
 		if(istype(I, /obj/item/kitchen/knife) || istype(I, /obj/item/scalpel))
 			inaccurate = FALSE
 	else
-		return TRUE
+		return ..()
 	if(!isturf(loc) || !(locate(/obj/structure/table) in loc) && \
 			!(locate(/obj/machinery/optable) in loc) && !(locate(/obj/item/storage/bag/tray) in loc))
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
@@ -373,7 +383,6 @@
 /obj/item/food/cereal
 	name = "box of cereal"
 	desc = "A box of cereal."
-	icon = 'icons/obj/food/food.dmi'
 	icon_state = "cereal_box"
 	list_reagents = list("nutriment" = 3)
 
