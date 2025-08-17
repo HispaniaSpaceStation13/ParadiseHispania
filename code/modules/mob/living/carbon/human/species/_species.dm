@@ -681,8 +681,8 @@
 								"<span class='userdanger'>You get slammed into the obstacle by [user]!</span>", \
 								"You hear a loud thud.")
 		if(!HAS_TRAIT(target, TRAIT_FLOORED))
-			target.KnockDown(3 SECONDS)
-			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockDown), 0), 3 SECONDS) // so you cannot chain stun someone
+			target.KnockDown(1 SECONDS)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockDown), 0), 1 SECONDS) // so you cannot chain stun someone
 		else if(!user.IsStunned())
 			target.Stun(0.5 SECONDS)
 	else
