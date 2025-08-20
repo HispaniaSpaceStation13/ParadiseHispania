@@ -3297,5 +3297,5 @@
 #include "modularHispania\code\datums\uplink_items\uplink_traitor.dm"
 #include "modularHispania\code\game\items\weapons\batons.dm"
 #include "modularHispania\code\game\jobs\access_override.dm"
-#include "modularHispania\customItems\medbot\medbot - Copy.dm"
+#include "modularHispania\customItems\medbot\medbot.dm"
 // END_INCLUDE
