@@ -580,7 +580,8 @@
 	"Special Operations Officer",
 	"Quartermaster",
 	"Syndicate Officer",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 
 /datum/game_mode/changeling/
 	protected_jobs = list(
@@ -601,7 +602,8 @@
 	"Special Operations Officer",
 	"Quartermaster",
 	"Syndicate Officer",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 
 /datum/game_mode/vampire/
 	protected_jobs = list(
@@ -622,7 +624,8 @@
 	"Special Operations Officer",
 	"Quartermaster",
 	"Syndicate Officer",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 
 /datum/game_mode/blob/
 	protected_jobs = list(
@@ -643,7 +646,8 @@
 	"Special Operations Officer",
 	"Quartermaster",
 	"Syndicate Officer",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 
 /datum/game_mode/cult/
 	protected_jobs = list(
@@ -665,7 +669,8 @@
 	"Syndicate Officer",
 	"Quartermaster",
 	"Chaplain",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 
 /datum/game_mode/cult/
 	protected_jobs = list(
@@ -687,7 +692,8 @@
 	"Syndicate Officer",
 	"Quartermaster",
 	"Chaplain",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 
 /datum/game_mode/revolution/
 	protected_jobs = list(
@@ -709,6 +715,7 @@
 	"Syndicate Officer",
 	"Quartermaster",
 	"Chaplain",
-	"Nanotrasen Career Trainer")
+	"Nanotrasen Career Trainer",
+	"AI")
 ///The end :)
 
