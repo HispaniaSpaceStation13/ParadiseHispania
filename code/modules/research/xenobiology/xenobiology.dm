@@ -572,17 +572,10 @@
 	pixel_y = -64
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()
 	var/freezerange = 2
 	var/duration = 140
 	alpha = 125
-
-/obj/effect/timestop/New()
-	..()
-	for(var/mob/living/M in GLOB.player_list)
-		for(var/datum/spell/aoe/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
-			immune |= M
 
 /obj/effect/timestop/proc/timestop()
 	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 100, TRUE, -1)
@@ -590,8 +583,6 @@
 		for(var/A in orange (freezerange, loc))
 			if(isliving(A))
 				var/mob/living/M = A
-				if(M in immune)
-					continue
 				M.notransform = TRUE
 				M.anchored = TRUE
 				if(ishostile(M))
