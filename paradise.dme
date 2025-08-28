@@ -3298,4 +3298,5 @@
 #include "modularHispania\code\game\items\weapons\batons.dm"
 #include "modularHispania\code\game\jobs\access_override.dm"
 #include "modularHispania\customItems\medbot\medbot.dm"
+#include "modularHispania\customItems\medbot\trash.dm"
 // END_INCLUDE

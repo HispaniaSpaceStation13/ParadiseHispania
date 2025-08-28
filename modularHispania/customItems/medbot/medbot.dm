@@ -1,7 +1,7 @@
 ////Custom medbot for evilruchi
 
 /mob/living/simple_animal/bot/medbot/evilruchi
-	name="Dr.arturit0 N3-gross"
+	name = "Dr.arturit0 N3-gross"
 	desc = "La primera versión beta del modelo actual Medibot y proyecto de tesis de robótica de Arhur, hecho con una tostadora reciclada de la cocina y un servomotor. Se dice que contiene una copia positrónica de su creador."
 	icon = 'modularHispania/customItems/medbot/aibots.dmi'
 
@@ -70,4 +70,12 @@
 		EVIL_MEDIBOT_VOICED_OBRAS_DE_ARTE = 'modularHispania/customItems/medbot/sound/9.mp3',
 		EVIL_MEDIBOT_VOICED_NO_SOY_VAGO = 'modularHispania/customItems/medbot/sound/10.mp3',
 		)
+
+/mob/living/simple_animal/bot/medbot/evilruchi/explode()
+	on = FALSE
+	var/turf/Tsec = get_turf(src)
+	if(drops_parts)
+		new /obj/item/trash/toaster(Tsec)
+
+	..()
 
