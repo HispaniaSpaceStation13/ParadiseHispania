@@ -3306,4 +3306,5 @@
 #include "modularHispania\code\datums\uplink_items\uplink_traitor.dm"
 #include "modularHispania\code\game\items\weapons\batons.dm"
 #include "modularHispania\code\game\jobs\access_override.dm"
+#include "modularHispania\code\modular\research\designs\medical_designs.dm"
 // END_INCLUDE
