@@ -5,6 +5,13 @@
 	webmap_url = "https://webmap.affectedarc07.co.uk/maps/paradise/cyberiad/"
 	welcome_sound = 'sound/AI/welcome_cyberiad.ogg'
 
+/datum/map/boxstationHispania
+	fluff_name = "NSS Cyberiad Astra"
+	technical_name = "BoxStationHispania"
+	map_path = "_maps/map_files/stations/boxstationHispania.dmm"
+	webmap_url = "https://webmap.affectedarc07.co.uk/maps/paradise/cyberiad/"
+	welcome_sound = 'sound/AI/welcome_cyberiad.ogg'
+
 /datum/map/metastation
 	fluff_name = "NSS Cerebron"
 	technical_name = "MetaStation"
