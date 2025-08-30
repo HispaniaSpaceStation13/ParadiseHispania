@@ -227,7 +227,7 @@
 	name = "Osseous Reagent"
 	id = "osseous_reagent"
 	result = "osseous_reagent"
-	required_reagents = list("milk" = 1, "potassium" = 1, "oxygen" = 4, "phenol" = 3, "formaldehyde" = 3)
+	required_reagents = list("milk" = 1, "potassium" = 1, "oxygen" = 2, "phenol" = 2, "formaldehyde" = 2)
 	result_amount = 12
 	mix_message = "Shards of a bone-like substance start to form in the liquid."
 
