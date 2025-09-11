@@ -103,21 +103,8 @@
 /datum/chemical_reaction/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
 	if(SSmobs.xenobiology_mobs < MAX_GOLD_CORE_MOBS)
-		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 5, "Gold Slime", HOSTILE_SPAWN, "chemicalsummon", TRUE, TRUE), 50)
-		SSmobs.xenobiology_mobs += 5
-	else
-		T.visible_message("<span class='danger'>The slime extract sputters out, there's too many mobs to make any more!</span>")
-
-/datum/chemical_reaction/slimemobspawn/lesser
-	name = "Slime Crit Lesser"
-	id = "m_tele3"
-	required_reagents = list("blood" = 1)
-
-/datum/chemical_reaction/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	if(SSmobs.xenobiology_mobs < MAX_GOLD_CORE_MOBS)
-		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral", TRUE, TRUE), 50)
-		SSmobs.xenobiology_mobs += 3
+		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 1, "Gold Slime", HOSTILE_SPAWN, "chemicalsummon", TRUE, TRUE), 50)
+		SSmobs.xenobiology_mobs += 1
 	else
 		T.visible_message("<span class='danger'>The slime extract sputters out, there's too many mobs to make any more!</span>")
 
@@ -677,10 +664,8 @@
 
 /datum/chemical_reaction/slimestop/on_reaction(datum/reagents/holder)
 	SSblackbox.record_feedback("tally", "slime_cores_used", 1, type)
-	var/mob/mob = get_mob_by_key(holder.my_atom.fingerprintslast)
 	var/obj/effect/timestop/T = new /obj/effect/timestop
 	T.forceMove(get_turf(holder.my_atom))
-	T.immune += mob
 	T.timestop()
 
 
