@@ -1,0 +1,11 @@
+// Evilruchi Medbot voice keys
+#define EVIL_MEDIBOT_VOICED_AHI_AFUERA "Ahí afuera hay un mundo mejor, pero es carísimo."
+#define EVIL_MEDIBOT_VOICED_NO_TENGO_INSOMNIO "No tengo insomnio, tengo conexión a internet."
+#define EVIL_MEDIBOT_VOICED_LO_MALO "Lo malo no es vivir en las nubes, sino bajar."
+#define EVIL_MEDIBOT_VOICED_ODIO_QUE_HABLEN "Odio que hablen cuando interrumpo."
+#define EVIL_MEDIBOT_VOICED_LA_VIDA "La vida es dura. Después de todo, te mata."
+#define EVIL_MEDIBOT_VOICED_RARO_YO "¿Raro yo? Que va, soy una edición limitada."
+#define EVIL_MEDIBOT_VOICED_SOLO_HAY "Sólo hay dos cosas infinitas; el universo y la estupidez de esta estación. Y no estoy tan seguro de la primera."
+#define EVIL_MEDIBOT_VOICED_DIOS "Dios me cree conserje por que solo me trae basura."
+#define EVIL_MEDIBOT_VOICED_OBRAS_DE_ARTE "No todas las obras de arte están en museos, por ejemplo, yo estoy en esta lata en el espacio."
+#define EVIL_MEDIBOT_VOICED_NO_SOY_VAGO "No soy vago, estoy en modo ahorro de energía."

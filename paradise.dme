@@ -3305,8 +3305,11 @@
 #include "code\tests\game_tests.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
+#include "modularHispania\code\__DEFINES\bots.dm"
 #include "modularHispania\code\datums\uplink_items\uplink_traitor.dm"
 #include "modularHispania\code\game\items\weapons\batons.dm"
 #include "modularHispania\code\game\jobs\access_override.dm"
+#include "modularHispania\customItems\medbot\medbot.dm"
+#include "modularHispania\customItems\medbot\trash.dm"
 #include "modularHispania\code\modular\research\designs\medical_designs.dm"
 // END_INCLUDE
