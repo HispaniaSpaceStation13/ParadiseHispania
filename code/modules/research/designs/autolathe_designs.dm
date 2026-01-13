@@ -123,6 +123,15 @@
 	category = list("initial","Tools")
 	maxstack = 30
 
+/datum/design/cable_coil_heavy_duty
+	name = "Heavy Duty Cable Coil"
+	id = "cable_coil_heavy_duty"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 30)
+	build_path = /obj/item/stack/cable_coil/extra_insulated
+	category = list("initial","Tools")
+	maxstack = 30
+
 /datum/design/toolbox
 	name = "Toolbox"
 	id = "tool_box"
@@ -576,6 +585,14 @@
 	build_path = /obj/item/ammo_box/magazine/detective/speedcharger
 	category = list("initial", "Security")
 
+/datum/design/paintball_magazine
+	name = "Paintball Magazine"
+	id = "paintball_mag"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 2500)
+	build_path = /obj/item/ammo_box/magazine/paintball
+	category = list("initial", "Miscellaneous")
+
 /datum/design/recorder
 	name = "Universal Recorder"
 	id = "recorder"
@@ -783,6 +800,14 @@
 	materials = list(MAT_METAL = 400, MAT_GLASS = 300)
 	build_path = /obj/item/weldingtool/largetank/empty
 	category = list("initial", "Tools")
+
+/datum/design/inflatable_briefcase
+	name = "Inflatable Barrier Box"
+	id = "inflatable_briefcase"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
+	build_path = /obj/item/storage/briefcase/inflatable
+	category = list("initial", "Construction")
 
 /datum/design/rcd
 	name = "Rapid Construction Device (RCD)"
@@ -1094,3 +1119,11 @@
 	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
 	build_path = /obj/item/forensics/swab
 	category = list("initial", "Security")
+
+/datum/design/suture_needle
+	name = "Suture Needle"
+	id = "sutureneedle"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/suture_needle
+	category = list("initial", "Medical")

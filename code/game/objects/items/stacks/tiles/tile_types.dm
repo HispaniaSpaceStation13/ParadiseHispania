@@ -1,10 +1,10 @@
 /obj/item/stack/tile
 	name = "broken tile"
-	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile"
-	item_state = "tile"
+	inhand_icon_state = "tile"
+	singular_name = "broken tile"
 	force = 1
 	throwforce = 1
 	throw_speed = 5
@@ -21,17 +21,17 @@
 
 /obj/item/stack/tile/welder_act(mob/user, obj/item/I)
 	if(get_amount() < 4)
-		to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
+		to_chat(user, SPAN_WARNING("You need at least four tiles to do this!"))
 		return
 	. = TRUE
 	if(!I.use_tool(src, user, volume = I.tool_volume))
-		to_chat(user, "<span class='warning'>You can not reform this!</span>")
+		to_chat(user, SPAN_WARNING("You can not reform this!"))
 		return
 	if(mineralType == "metal")
 		var/obj/item/stack/sheet/metal/new_item = new(user.loc)
 		user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
-					"<span class='notice'>You shaped [src] into metal with the welding tool.</span>", \
-					"<span class='italics'>You hear welding.</span>")
+					SPAN_NOTICE("You shaped [src] into metal with the welding tool."), \
+					SPAN_ITALICS("You hear welding."))
 		var/obj/item/stack/rods/R = src
 		src = null
 		var/replace = (user.get_inactive_hand()==R)

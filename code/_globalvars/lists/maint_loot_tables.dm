@@ -46,6 +46,7 @@ GLOBAL_LIST_INIT(maintenance_loot_tier_1, list(
 		// Sub-spawners
 		/obj/effect/spawner/random/engineering/toolbox,
 		/obj/effect/spawner/random/snacks,
+		/obj/effect/spawner/random/food_or_drink/juice_boxes,
 
 		// Assemblies and cells
 		/obj/item/assembly/prox_sensor,
@@ -159,6 +160,7 @@ GLOBAL_LIST_INIT(maintenance_loot_tier_2, list(
 		/obj/item/storage/backpack/satchel_flat,
 		/obj/item/storage/belt/military/traitor,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+		/obj/item/storage/fancy/cigarettes/cigpack_carcinoma,
 		/obj/item/storage/pill_bottle/fakedeath,
 		/obj/item/storage/secure/briefcase/syndie,
 		/obj/item/storage/toolbox/syndicate,

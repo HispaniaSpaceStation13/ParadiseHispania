@@ -61,6 +61,8 @@
 /// Continue processing while in stasis
 #define AI_FLAG_CAN_ACT_IN_STASIS (1<<3)
 
+#define PASSIVE_AI_FLAGS (AI_FLAG_PAUSE_DURING_DO_AFTER | AI_FLAG_STOP_MOVING_WHEN_PULLED)
+
 // Base Subtree defines
 
 /// This subtree should cancel any further planning, (Including from other subtrees)
@@ -69,3 +71,8 @@
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 #define AI_BOT_PATH_LENGTH 60
+
+/// probability that the pawn should try resisting out of restraints
+#define RESIST_SUBTREE_PROB 50
+/// macro for whether it's appropriate to resist right now, used by resist subtree
+#define SHOULD_RESIST(source) (source.on_fire || source.buckled || source.restrained() || source.pulledby)

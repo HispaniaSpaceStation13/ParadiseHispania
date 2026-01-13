@@ -13,16 +13,17 @@
  */
 
 /obj/item/kitchen
+	name = "base type kitchen item"
+	desc = ABSTRACT_TYPE_DESC
 	icon = 'icons/obj/kitchen.dmi'
 	origin_tech = "materials=1"
-
-
-
+	materials = list(MAT_METAL = 100)
 
 /*
  * Utensils
  */
 /obj/item/kitchen/utensil
+	name = "base type kitchen utensil"
 	lefthand_file = 'icons/mob/inhands/utensil_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/utensil_righthand.dmi'
 	force = 5.0
@@ -72,6 +73,8 @@
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
+	flags = NONE
+	materials = list(MAT_PLASTIC = 2000)
 
 /obj/item/kitchen/utensil/spoon
 	name = "spoon"
@@ -84,6 +87,8 @@
 	desc = "It's a plastic spoon. How dull."
 	icon_state = "pspoon"
 	attack_verb = list("attacked", "poked")
+	flags = NONE
+	materials = list(MAT_PLASTIC = 2000)
 
 /obj/item/kitchen/utensil/spork
 	name = "spork"
@@ -96,14 +101,18 @@
 	desc = "It's a plastic spork. It's the fork side of the spoon!"
 	icon_state = "pspork"
 	attack_verb = list("attacked", "sporked")
+	flags = NONE
+	materials = list(MAT_PLASTIC = 2000)
 
 /*
  * Knives
  */
 /obj/item/kitchen/knife
 	name = "kitchen knife"
-	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
+	icon_state = "knife"
+	lefthand_file = 'icons/mob/inhands/weapons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons_righthand.dmi'
 	flags = CONDUCT
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
@@ -111,22 +120,22 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 6
-	materials = list(MAT_METAL=12000)
+	materials = list(MAT_METAL = 12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = TRUE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, RAD = 0, FIRE = 50, ACID = 50)
-	lefthand_file = 'icons/mob/inhands/weapons_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons_righthand.dmi'
 	var/bayonet = FALSE	//Can this be attached to a gun?
 
 /obj/item/kitchen/knife/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator/robo)
+	AddComponent(/datum/component/surgery_initiator/robo/sharp)
+	RegisterSignal(src, COMSIG_BIT_ATTACH, PROC_REF(add_bit))
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(remove_bit))
 
 /obj/item/kitchen/knife/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", \
-						"<span class='suicide'>[user] is slitting [user.p_their()] throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>", \
-						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>"))
+	user.visible_message(pick(SPAN_SUICIDE("[user] is slitting [user.p_their()] wrists with [src]! It looks like [user.p_theyre()] trying to commit suicide!"), \
+						SPAN_SUICIDE("[user] is slitting [user.p_their()] throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"), \
+						SPAN_SUICIDE("[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!")))
 	return BRUTELOSS
 
 /obj/item/kitchen/knife/plastic
@@ -134,6 +143,8 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	sharp = FALSE
+	flags = NONE
+	materials = list(MAT_PLASTIC = 2000)
 
 /obj/item/kitchen/knife/ritual
 	name = "ritual knife"
@@ -146,35 +157,37 @@
 	name = "glass shiv"
 	desc = "A haphazard sharp object wrapped in cloth, just like great-great-great-great grandma used to make."
 	icon = 'icons/obj/weapons/melee.dmi'
-	item_state = "glass_shiv"
 	icon_state = "glass_shiv"
+	flags = NONE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 2000)
 
 /obj/item/kitchen/knife/shiv/carrot
 	name = "carrot shiv"
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "carrotshiv"
-	item_state = "carrotshiv"
 	force = 8
 	throwforce = 12 //fuck git
 	materials = list()
 	origin_tech = "biotech=3;combat=2"
 	attack_verb = list("shanked", "shivved")
 	armor = null
+	materials = list()
 
 /obj/item/kitchen/knife/butcher
 	name = "butcher's cleaver"
-	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
+	icon_state = "butch"
 	force = 15
 	throwforce = 8
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
+	materials = list(MAT_METAL = 18000)
 
 /obj/item/kitchen/knife/butcher/meatcleaver
 	name = "meat cleaver"
 	icon_state = "mcleaver"
-	item_state = "butch"
+	inhand_icon_state = "butch"
 	force = 25
 	throwforce = 15
 
@@ -184,9 +197,10 @@
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
-	icon_state = "combatknife"
-	item_state = "knife"
 	desc = "A military combat utility survival knife."
+	icon_state = "combatknife"
+	worn_icon_state = "knife"
+	inhand_icon_state = "knife"
 	force = 20
 	throwforce = 20
 	origin_tech = "materials=3;combat=4"
@@ -195,25 +209,24 @@
 
 /obj/item/kitchen/knife/combat/survival
 	name = "survival knife"
-	icon_state = "survivalknife"
 	desc = "A hunting grade survival knife."
+	icon_state = "survivalknife"
 	force = 15
 	throwforce = 15
 
 /obj/item/kitchen/knife/combat/survival/bone
 	name = "bone dagger"
-	item_state = "bone_dagger"
-	icon_state = "bone_dagger"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
+	icon_state = "bone_dagger"
+	inhand_icon_state = "bone_dagger"
 	materials = list()
+	flags = NONE
 
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
+	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife"
-	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 	origin_tech = null
 
 /obj/item/kitchen/knife/cheese
@@ -222,7 +235,6 @@
 	icon_state = "knife-cheese"
 	materials = list(MAT_METAL = 4000)
 	force = 3
-	materials = list(MAT_METAL = 4000)
 
 /obj/item/kitchen/knife/pizza_cutter
 	name = "pizza cutter"
@@ -230,7 +242,6 @@
 	icon_state = "pizza_cutter"
 	materials = list(MAT_METAL = 10000)
 	force = 8
-	materials = list(MAT_METAL = 10000)
 
 /*
  * Rolling Pins
@@ -240,10 +251,11 @@
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
-	force = 8.0
-	throwforce = 10.0
+	force = 8
+	throwforce = 10
 	throw_speed = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	materials = list(MAT_WOOD = 10000)
 
 /* Trays moved to /obj/item/storage/bag */
 
@@ -261,6 +273,7 @@
 	throw_speed = 3
 	throw_range = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
+	materials = list(MAT_PLASTIC = 2000)
 
 /obj/item/reagent_containers/cooking/mould/make_mini()
 	transform *= 0.5

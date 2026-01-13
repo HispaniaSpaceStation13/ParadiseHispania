@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	singular_name = "cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
-	item_state = "coil"
+	inhand_icon_state = "coil"
 	belt_icon = "cable_coil"
 	amount = MAXCOIL
 	max_amount = MAXCOIL
@@ -24,6 +24,11 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	usesound = 'sound/items/deconstruct.ogg'
+	/// Type of cable this coil makes
+	var/cable_type = /obj/structure/cable
+	/// Bitflag of the types of cable we can add cable to with this coil.
+	/// This is different to the cable connection flag since it only governs connecting on the same tile
+	var/cable_merge_id = CABLE_MERGE_LOW_POWER
 
 /obj/item/stack/cable_coil/Initialize(mapload, length, paramcolor)
 	. = ..()
@@ -70,6 +75,13 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	else
 		. += "A coil of power cables."
 
+/obj/item/stack/cable_coil/can_merge(obj/item/stack/check, inhand = FALSE)
+	. = FALSE
+	if(istype(check, merge_type))
+		var/obj/item/stack/cable_coil/coil_check = check
+		. = coil_check.cable_merge_id == cable_merge_id
+	return . && ..()
+
 //you can use wires to heal robotics
 /obj/item/stack/cable_coil/attack__legacy__attackchain(mob/M, mob/user)
 	if(!ishuman(M))
@@ -78,16 +90,16 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	var/obj/item/organ/external/S = H.bodyparts_by_name[user.zone_selected]
 
 	if(!S && ismachineperson(M) && user.a_intent == INTENT_HELP)
-		to_chat(user, "<span class='notice'>[M.p_they(TRUE)] [M.p_are()] missing that limb!</span>")
+		to_chat(user, SPAN_NOTICE("[M.p_they(TRUE)] [M.p_are()] missing that limb!"))
 		return
 
 	if(!S?.is_robotic() || user.a_intent != INTENT_HELP || S.open == ORGAN_SYNTHETIC_OPEN)
 		return ..()
 	if(S.burn_dam > ROBOLIMB_SELF_REPAIR_CAP)
-		to_chat(user, "<span class='danger'>The damage is far too severe to patch over externally.</span>")
+		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
 		return
 	if(!S.burn_dam)
-		to_chat(user, "<span class='notice'>Nothing to fix!</span>")
+		to_chat(user, SPAN_NOTICE("Nothing to fix!"))
 		return
 	if(H == user)
 		if(!do_mob(user, H, 10))
@@ -117,7 +129,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 			cable_used += 1
 			E.heal_damage(0, HEALPERCABLE, 0, TRUE)
 		H.UpdateDamageIcon()
-		user.visible_message("<span class='alert'>[user] repairs some burn damage on [M]'s [E.name] with [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] repairs some burn damage on [M]'s [E.name] with [src]."))
 	return TRUE
 
 /obj/item/stack/cable_coil/split()
@@ -133,6 +145,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 		// Cable merging is handled by parent proc
+		if(C.cable_merge_id != cable_merge_id)
+			to_chat(user, "These coils are of different types.")
+			return
 		if(C.get_amount() >= MAXCOIL)
 			to_chat(user, "The coil is as long as it will get.")
 			return
@@ -152,7 +167,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 //////////////////////////////////////////////
 
 /obj/item/stack/cable_coil/proc/get_new_cable(location)
-	var/obj/structure/cable/C = new(location)
+	var/obj/structure/cable/C = new cable_type(location)
 	C.cable_color(color)
 
 	return C
@@ -162,13 +177,13 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	if(!isturf(user.loc))
 		return
 	if(!isturf(T) || T.intact || !T.can_have_cabling())
-		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
+		to_chat(user, SPAN_WARNING("You can only lay cables on catwalks and plating!"))
 		return
 	if(get_amount() < 1) // Out of cable
-		to_chat(user, "<span class='warning'>There is no cable left!</span>")
+		to_chat(user, SPAN_WARNING("There is no cable left!"))
 		return
 	if(get_dist(T, user) > 1) // Too far
-		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
+		to_chat(user, SPAN_WARNING("You can't lay cable at a place that far away!"))
 		return
 
 	if(!cable_direction) //If we weren't given a direction, come up with one! (Called as null from catwalk.dm and floor.dm)
@@ -179,7 +194,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 
 	for(var/obj/structure/cable/LC in T)
 		if(LC.d2 == cable_direction && LC.d1 == NO_DIRECTION) //there's already a cable here that would be exactly what we just placed!
-			to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+			to_chat(user, SPAN_WARNING("There's already a cable at that position!"))
 			return
 
 	var/obj/structure/cable/C = get_new_cable(T)
@@ -212,6 +227,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 
 /// called when cable_coil is click on an installed obj/cable or click on a turf that already contains a "node" cable
 /obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
+	if(C.merge_id != cable_merge_id)
+		return
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -222,7 +239,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 		return
 	// make sure it's close enough
 	if(get_dist(C, user) > 1)
-		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
+		to_chat(user, SPAN_WARNING("You can't lay cable at a place that far away!"))
 		return
 	//if clicked on the turf we're standing on, try to put a cable in the direction we're facing
 	if(U == T)
@@ -234,7 +251,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == new_direction || C.d2 == new_direction)
 		if(U.intact || U.transparent_floor)						// can't place a cable if the floor is complete
-			to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed!</span>")
+			to_chat(user, SPAN_WARNING("You can't lay cable there unless the floor tiles are removed!"))
 			return
 		// cable is pointing at us, we're standing on an open tile
 		// so create a stub pointing at the clicked cable on our tile
@@ -243,7 +260,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 
 		for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
 			if(LC.d1 == direction_flipped || LC.d2 == direction_flipped)
-				to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+				to_chat(user, SPAN_WARNING("There's already a cable at that position!"))
 				return
 
 		var/obj/structure/cable/NC = get_new_cable (U)
@@ -287,7 +304,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 			if(LC == C)			// skip the cable we're interacting with
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1))	// make sure no cable matches either direction
-				to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+				to_chat(user, SPAN_WARNING("There's already a cable at that position!"))
 				return
 
 
@@ -338,9 +355,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
-		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(SPAN_SUICIDE("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(SPAN_SUICIDE("[user] is strangling [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 /obj/item/stack/cable_coil/proc/color_rainbow()
@@ -378,8 +395,31 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	. = ..()
 	color = pick(COLOR_RED, COLOR_BLUE, COLOR_GREEN, COLOR_WHITE, COLOR_PINK, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE)
 
+/obj/item/stack/cable_coil/extra_insulated
+	name = "heavy duty cable coil"
+	singular_name = "heavy duty cable"
+	icon = 'icons/obj/cable_coils/heavy_duty.dmi'
+	color = null
+	cable_type = /obj/structure/cable/extra_insulated
+	cable_merge_id = CABLE_MERGE_HIGH_POWER
+	req_one_access = list(ACCESS_ENGINE, ACCESS_CE)
+
+/obj/item/stack/cable_coil/extra_insulated/proc/toggle_connection(user)
+	if(allowed(user))
+		if(cable_type == /obj/structure/cable/extra_insulated/pre_connect)
+			cable_type = /obj/structure/cable/extra_insulated
+			icon = 'icons/obj/cable_coils/heavy_duty.dmi'
+		else
+			cable_type = /obj/structure/cable/extra_insulated/pre_connect
+			icon = 'icons/obj/cable_coils/heavy_duty_connected.dmi'
+
+/obj/item/stack/cable_coil/extra_insulated/attackby__legacy__attackchain(obj/item/I, mob/living/user)
+	if(I.GetID())
+		toggle_connection(user)
+	return ..()
+
 /obj/item/stack/cable_coil/cut
-	item_state = "coil2"
+	icon_state = "coil2"
 
 /obj/item/stack/cable_coil/cut/Initialize(mapload)
 	. = ..()
@@ -398,6 +438,17 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe/cable_restrain
 	var/cablecolor = tgui_input_list(usr, "Pick a cable color.", "Cable Color", list("red","yellow","green","blue","pink","orange","cyan","white"))
 	cable_color(cablecolor)
 	update_icon()
+
+/obj/item/stack/cable_coil/extra_insulated/cyborg
+	energy_type = /datum/robot_storage/energy/cable
+	is_cyborg = TRUE
+
+/obj/item/stack/cable_coil/extra_insulated/cyborg/attack_self__legacy__attackchain(mob/user)
+	toggle_connection(user)
+	update_icon()
+
+/obj/item/stack/cable_coil/extra_insulated/cyborg/update_icon_state()
+	return // icon_state should always be a full cable
 
 #undef HEALPERCABLE
 #undef MAXCABLEPERHEAL

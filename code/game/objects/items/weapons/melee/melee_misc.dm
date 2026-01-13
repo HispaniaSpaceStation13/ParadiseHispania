@@ -3,7 +3,6 @@
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
-	item_state = "chain"
 	flags = CONDUCT
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
@@ -13,7 +12,7 @@
 	hitsound = 'sound/weapons/slash.ogg' //pls replace
 
 /obj/item/melee/chainofcommand/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='suicide'>[user] is strangling [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	to_chat(viewers(user), SPAN_SUICIDE("[user] is strangling [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 // MARK: ICE PICK
@@ -21,7 +20,6 @@
 	name = "ice pick"
 	desc = "Used for chopping ice. Also excellent for mafia esque murders."
 	icon_state = "icepick"
-	item_state = "icepick"
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_SMALL
@@ -32,7 +30,6 @@
 	name = "candy cane sword"
 	desc = "A large candy cane with a sharpened point. Definitely too dangerous for schoolchildren."
 	icon_state = "candy_sword"
-	item_state = "candy_sword"
 	force = 10
 	throwforce = 7
 	attack_verb = list("slashed", "stabbed", "sliced", "caned")
@@ -42,7 +39,6 @@
 	name = "flyswatter"
 	desc = "Useful for killing insects of all sizes."
 	icon_state = "flyswatter"
-	item_state = "flyswatter"
 	force = 1
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
@@ -54,19 +50,19 @@
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	strong_against = typecacheof(list(
-					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/basic/bee/,
 					/mob/living/basic/butterfly,
 					/mob/living/basic/cockroach,
 					/obj/item/queen_bee))
-	strong_against -= /mob/living/simple_animal/hostile/poison/bees/syndi // Syndi-bees have special anti-flyswatter tech installed
+	strong_against -= /mob/living/basic/bee/syndi // Syndi-bees have special anti-flyswatter tech installed
 
 /obj/item/melee/flyswatter/attack__legacy__attackchain(mob/living/M, mob/living/user, def_zone)
 	. = ..()
 	if(is_type_in_typecache(M, strong_against))
 		new /obj/effect/decal/cleanable/insectguts(M.drop_location())
-		user.visible_message("<span class='warning'>[user] splats [M] with [src].</span>",
-			"<span class='warning'>You splat [M] with [src].</span>",
-			"<span class='warning'>You hear a splat.</span>")
+		user.visible_message(SPAN_WARNING("[user] splats [M] with [src]."),
+			SPAN_WARNING("You splat [M] with [src]."),
+			SPAN_WARNING("You hear a splat."))
 		if(isliving(M))
 			var/mob/living/bug = M
 			bug.death(TRUE)

@@ -136,6 +136,8 @@
 	#define COMPONENT_NO_ATTACH (1<<0)
 ///from base of mob/living/health_update()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
+/// Sent during exfiltration to handle guardians
+#define COMSIG_SUMMONER_EXTRACTED "summoner_extracted"
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
 ///sent when a mob enters a borg charger
@@ -190,6 +192,11 @@
 #define COMSIG_LIVING_WRITE_MEMORY "living_write_memory"
 	#define COMPONENT_DONT_WRITE_MEMORY (1<<0)
 
+/// Sent to a mob being injected with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
+/// Sent to a mob being withdrawn from with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
+
 // /mob/living/simple_animal signals
 ///from /mob/living/simple_animal/handle_environment()
 #define COMSIG_SIMPLEANIMAL_HANDLE_ENVIRONMENT "simpleanimal_handle_environment"
@@ -205,6 +212,9 @@
 #define COMSIG_MOB_PRE_EAT "mob_pre_eat"
 	///cancel eating attempt
 	#define COMSIG_MOB_CANCEL_EAT (1<<0)
+
+/// From /datum/status_effect/incapacitating/sleeping/tick()
+#define COMSIG_MOB_SLEEP_TICK "mob_sleep_tick"
 
 /// From /datum/element/basic_eating/finish_eating()
 #define COMSIG_MOB_ATE "mob_ate"
@@ -273,3 +283,19 @@
 
 /// From base of /datum/action/cooldown/proc/set_statpanel_format(): (list/stat_panel_data)
 #define COMSIG_ACTION_SET_STATPANEL "ability_set_statpanel"
+
+/// Fired by a mob which has been grabbed by a goliath
+#define COMSIG_GOLIATH_TENTACLED_GRABBED "goliath_tentacle_grabbed"
+/// Fired by a goliath tentacle which is returning to the earth
+#define COMSIG_GOLIATH_TENTACLE_RETRACTING 	"goliath_tentacle_retracting"
+
+/// Called from /mob/living/carbon/help_shake_act, before any hugs have occurred. (mob/living/helper)
+#define COMSIG_CARBON_PRE_MISC_HELP "carbon_pre_misc_help"
+	/// Stops the rest of help act (hugging, etc) from occurring
+	#define COMPONENT_BLOCK_MISC_HELP (1<<0)
+
+/// From base of /client/Move(): (direction, old_dir)
+#define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
+
+/// Called when someone attempts to cuff a carbon
+#define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"

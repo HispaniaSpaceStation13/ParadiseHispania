@@ -24,6 +24,8 @@
 	var/toxins = 0
 	var/sleeping_agent = 0
 	var/agent_b = 0
+	var/hydrogen = 0
+	var/water_vapor = 0
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -99,6 +101,10 @@
 	var/destination_y
 	/// The destination z-level that atoms entering this turf will be automatically moved to.
 	var/destination_z
+
+	///what /mob/oranges_ear instance is already assigned to us as there should only ever be one.
+	///used for guaranteeing there is only one oranges_ear per turf when assigned, speeds up view() iteration
+	var/mob/oranges_ear/assigned_oranges_ear
 
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
@@ -189,7 +195,7 @@
 	else if(our_rpd.mode == RPD_DISPOSALS_MODE)
 		for(var/obj/machinery/door/airlock/A in src)
 			if(A.density)
-				to_chat(user, "<span class='warning'>That type of pipe won't fit under [A]!</span>")
+				to_chat(user, SPAN_WARNING("That type of pipe won't fit under [A]!"))
 				return
 		our_rpd.create_disposals_pipe(user, src)
 	else if(our_rpd.mode == RPD_TRANSIT_MODE)
@@ -201,8 +207,8 @@
 	else if(our_rpd.mode == RPD_DELETE_MODE)
 		our_rpd.delete_all_pipes(user, src)
 
-/turf/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj, /obj/item/projectile/bullet/gyro))
+/turf/bullet_act(obj/projectile/Proj)
+	if(istype(Proj, /obj/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2, cause = "[Proj.type] fired by [key_name(Proj.firer)] (hit turf)")
 	..()
 	return FALSE
@@ -444,6 +450,8 @@
 		merged.set_toxins(merged.toxins() / turf_count)
 		merged.set_sleeping_agent(merged.sleeping_agent() / turf_count)
 		merged.set_agent_b(merged.agent_b() / turf_count)
+		merged.set_hydrogen(merged.hydrogen() / turf_count)
+		merged.set_water_vapor(merged.water_vapor() / turf_count)
 	get_turf_air(self).copy_from(merged)
 
 /turf/proc/ReplaceWithLattice()
@@ -550,7 +558,7 @@
 			var/obj/item/stack/cable_coil/C = used
 			for(var/obj/structure/cable/LC in src)
 				if(LC.d1 == 0 || LC.d2 == 0)
-					LC.attackby__legacy__attackchain(C, user)
+					LC.item_interaction(user, C)
 					return ITEM_INTERACT_COMPLETE
 			C.place_turf(src, user)
 			return ITEM_INTERACT_COMPLETE
@@ -559,7 +567,7 @@
 			if(R.loaded)
 				for(var/obj/structure/cable/LC in src)
 					if(LC.d1 == 0 || LC.d2 == 0)
-						LC.attackby__legacy__attackchain(R, user)
+						LC.item_interaction(user, R)
 						return ITEM_INTERACT_COMPLETE
 				R.loaded.place_turf(src, user)
 				R.is_empty(user)
@@ -587,9 +595,12 @@
 		if(AM == source)
 			continue	//we don't want to return source
 		if(istype(AM, /obj/structure/cable))
-
 			var/obj/structure/cable/C = AM
 			if(C.d1 == direction || C.d2 == direction)
+				if(istype(source, /obj/structure/cable))
+					var/obj/structure/cable/source_cable = source
+					if(!(source_cable.connect_type & C.connect_type))
+						continue
 				. += C // one of the cables ends matches the supplied direction, add it to connnections
 		if(cable_only || direction)
 			continue
@@ -657,7 +668,7 @@
 	if(mob_hurt || !density)
 		return
 	playsound(src, 'sound/weapons/punch1.ogg', 35, 1)
-	C.visible_message("<span class='danger'>[C] slams into [src]!</span>", "<span class='userdanger'>You slam into [src]!</span>")
+	C.visible_message(SPAN_DANGER("[C] slams into [src]!"), SPAN_USERDANGER("You slam into [src]!"))
 	if(issilicon(C))
 		C.adjustBruteLoss(damage)
 		C.Weaken(3 SECONDS)

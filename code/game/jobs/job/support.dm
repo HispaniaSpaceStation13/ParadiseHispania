@@ -31,11 +31,15 @@
 		ACCESS_EXPEDITION,
 		ACCESS_SMITH
 	)
+	skeleton_access = list(ACCESS_CAPTAIN)
 	blacklisted_disabilities = list(DISABILITY_FLAG_BLIND, DISABILITY_FLAG_DEAF, DISABILITY_FLAG_MUTE, DISABILITY_FLAG_DIZZY)
 	outfit = /datum/outfit/job/qm
 	important_information = "This role requires you to coordinate a department. You are required to be familiar with Standard Operating Procedure (Supply), basic job duties, and act professionally (roleplay)."
 	exp_map = list(EXP_TYPE_SUPPLY = 1200)
 	standard_paycheck = CREW_PAY_HIGH
+	difficulty = MEDIUM_DIFFICULTY
+	description = "The Quartermaster has the responsibility of overseeing the Supply department.\n\n\
+					Difficulties: Standard Operating Procedure (General, Supply, Command), mining, cargo, economy, paperwork"
 
 /datum/outfit/job/qm
 	name = "Quartermaster"
@@ -77,9 +81,17 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SUPPLY_SHUTTLE,
 	)
+	skeleton_access = list(
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_SMITH,
+	)
 	alt_titles = list("Mail Carrier", "Courier")
 	outfit = /datum/outfit/job/cargo_tech
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = EASY_DIFFICULTY
+	description = "Cargo Technicians have the responsibility of handling cargo orders and delivering mail.\n\n\
+					Difficulties: Loading and unloading crates, economy, paperwork, menu navigation"
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
@@ -87,6 +99,7 @@
 
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	l_pocket = /obj/item/mail_scanner
+	r_pocket = /obj/item/storage/bag/mail
 	l_ear = /obj/item/radio/headset/headset_cargo
 	id = /obj/item/card/id/supply
 	pda = /obj/item/pda/cargo
@@ -113,11 +126,18 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_SMITH
+		ACCESS_SMITH,
+	)
+	skeleton_access = list(
+		ACCESS_MAILSORTING,
+		ACCESS_SUPPLY_SHUTTLE,
 	)
 	alt_titles = list("Metalworker", "Tinkerer")
 	outfit = /datum/outfit/job/smith
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = MEDIUM_DIFFICULTY
+	description = "The Smith has the responsibility of refining ores, as well as making tool bits and armor plates.\n\n\
+					Difficulties: Smithing, controls"
 
 /datum/outfit/job/smith
 	name = "Smith"
@@ -125,10 +145,12 @@
 
 	gloves = /obj/item/clothing/gloves/smithing
 	uniform = /obj/item/clothing/under/rank/cargo/smith
+	r_pocket = /obj/item/storage/bag/smith
 	l_ear = /obj/item/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/workboots/smithing
 	id = /obj/item/card/id/smith
 	pda = /obj/item/pda/cargo
+	box = /obj/item/storage/box/survival_mining
 
 /datum/outfit/job/smith/on_mind_initialize(mob/living/carbon/human/H)
 	. = ..()
@@ -150,9 +172,19 @@
 		ACCESS_MINING_STATION,
 		ACCESS_MINING,
 	)
+	skeleton_access = list(
+		ACCESS_MAILSORTING,
+		ACCESS_CARGO,
+		ACCESS_CARGO_BAY,
+		ACCESS_SUPPLY_SHUTTLE,
+		ACCESS_SMITH,
+	)
 	alt_titles = list("Spelunker")
 	outfit = /datum/outfit/job/mining
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = HARD_DIFFICULTY
+	description = "Shaft Miners have the responsibility of mining ores on Lavaland.\n\n\
+					Difficulties: Mining, combat"
 
 /datum/outfit/job/mining
 	name = "Shaft Miner"
@@ -174,7 +206,7 @@
 	)
 
 	backpack = /obj/item/storage/backpack/explorer
-	satchel = /obj/item/storage/backpack/satchel/explorer
+	satchel = /obj/item/storage/backpack/satchel_explorer
 	box = /obj/item/storage/box/survival_mining
 
 /datum/outfit/job/mining/on_mind_initialize(mob/living/carbon/human/H)
@@ -194,6 +226,12 @@
 		/obj/item/mining_voucher=1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser=1,
 		/obj/item/gun/energy/kinetic_accelerator=1,\
+		/obj/item/stack/marker_beacon/ten=1
+	)
+
+/datum/outfit/job/mining/equipped/less
+	backpack_contents = list(
+		/obj/item/flashlight/seclite=1,\
 		/obj/item/stack/marker_beacon/ten=1
 	)
 
@@ -230,14 +268,22 @@
 		ACCESS_EXTERNAL_AIRLOCKS,
 		ACCESS_TELEPORTER,
 		ACCESS_CARGO,
-		ACCESS_CARGO_BAY,
 		ACCESS_MINERAL_STOREROOM,
+	)
+	skeleton_access = list(
+		ACCESS_CARGO_BAY,
 		ACCESS_SUPPLY_SHUTTLE,
-		ACCESS_MINING_STATION
+		ACCESS_MAILSORTING,
+		ACCESS_MINING_STATION,
+		ACCESS_MINING,
+		ACCESS_SMITH,
 	)
 	alt_titles = list("Salvage Technician", "Scavenger")
 	outfit = /datum/outfit/job/explorer
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = HARD_DIFFICULTY
+	description = "Explorers have the responsibility of exploring space near the station.\n\n\
+					Difficulties: Space movement, combat, space exploration, mining"
 
 /datum/outfit/job/explorer
 	name = "Explorer"
@@ -245,13 +291,15 @@
 	l_ear = /obj/item/radio/headset/headset_cargo/expedition
 	head = /obj/item/clothing/head/soft/expedition
 	uniform = /obj/item/clothing/under/rank/cargo/expedition
+	l_pocket = /obj/item/storage/bag/expedition
+	r_pocket = /obj/item/storage/bag/ore
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	belt = /obj/item/storage/belt/utility/expedition
 	id = /obj/item/card/id/explorer
 	pda = /obj/item/pda/explorer
 	backpack = /obj/item/storage/backpack/explorer
-	satchel = /obj/item/storage/backpack/satchel/explorer
+	satchel = /obj/item/storage/backpack/satchel_explorer
 	box = /obj/item/storage/box/survival_mining
 
 /datum/outfit/job/explorer/on_mind_initialize(mob/living/carbon/human/H)
@@ -270,8 +318,16 @@
 	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(ACCESS_BAR, ACCESS_MAINT_TUNNELS, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
+	skeleton_access = list(
+		ACCESS_KITCHEN,
+		ACCESS_HYDROPONICS,
+		ACCESS_MORGUE,
+	)
 	outfit = /datum/outfit/job/bartender
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = LOW_DIFFICULTY
+	description = "The Bartender has the responsibility of mixing drinks for the crew.\n\n\
+					Difficulties: Mixing drinks"
 
 /datum/outfit/job/bartender
 	name = "Bartender"
@@ -317,9 +373,18 @@
 		ACCESS_KITCHEN,
 		ACCESS_MAINT_TUNNELS
 	)
+	skeleton_access = list(
+		ACCESS_BAR,
+		ACCESS_MORGUE,
+		ACCESS_HYDROPONICS,
+		ACCESS_MINERAL_STOREROOM,
+	)
 	alt_titles = list("Cook","Culinary Artist","Butcher")
 	outfit = /datum/outfit/job/chef
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = MEDIUM_DIFFICULTY
+	description = "The Chef has the responsibility of cooking food for the crew.\n\n\
+					Difficulties: Martial arts, cooking"
 
 /datum/outfit/job/chef
 	name = "Chef"
@@ -330,6 +395,7 @@
 	belt = /obj/item/storage/belt/chef
 	head = /obj/item/clothing/head/chefhat
 	l_ear = /obj/item/radio/headset/headset_service
+	neck = /obj/item/clothing/neck/neckerchief/red
 	id = /obj/item/card/id/chef
 	pda = /obj/item/pda/chef
 	backpack_contents = list(
@@ -341,6 +407,7 @@
 	var/datum/martial_art/cqc/under_siege/justacook = new
 	justacook.teach(H) // requires mind
 	ADD_TRAIT(H.mind, TRAIT_TABLE_LEAP, ROUNDSTART_TRAIT)
+	ADD_TRAIT(H.mind, TRAIT_BUTCHER, JOB_TRAIT)
 
 /datum/job/hydro
 	title = "Botanist"
@@ -357,9 +424,17 @@
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MORGUE
 	)
+	skeleton_access = list(
+		ACCESS_KITCHEN,
+		ACCESS_BAR,
+		ACCESS_MINERAL_STOREROOM,
+	)
 	alt_titles = list("Hydroponicist", "Botanical Researcher")
 	outfit = /datum/outfit/job/hydro
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = MEDIUM_DIFFICULTY
+	description = "Botanists have the responsibility of growing plants for the Chef.\n\n\
+					Difficulties: Growing plants, maniuplating plant traits"
 
 /datum/outfit/job/hydro
 	name = "Botanist"
@@ -371,6 +446,7 @@
 	gloves = /obj/item/clothing/gloves/botanic_leather
 	l_ear = /obj/item/radio/headset/headset_service
 	l_pocket = /obj/item/storage/bag/plants/portaseeder
+	r_pocket = /obj/item/storage/bag/plants
 	pda = /obj/item/pda/botanist
 	id = /obj/item/card/id/botanist
 	backpack = /obj/item/storage/backpack/botany
@@ -400,6 +476,9 @@
 	)
 	outfit = /datum/outfit/job/clown
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = EASY_DIFFICULTY
+	description = "The Clown has the responsibility of entertaining the crew.\n\n\
+					Difficulties: A sense of humor. Honk!"
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -425,7 +504,7 @@
 	bio_chips = list(/obj/item/bio_chip/sad_trombone)
 
 	backpack = /obj/item/storage/backpack/clown
-	satchel = /obj/item/storage/backpack/satchel/clown
+	satchel = /obj/item/storage/backpack/satchel_clown
 	dufflebag = /obj/item/storage/backpack/duffel/clown
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -468,7 +547,7 @@
 	active = TRUE
 	background_icon_state = "bg_spell"
 	build_all_button_icons()
-	to_chat(H, "<span class='notice'>You start acting clumsy to throw suspicions off. Focus again before using weapons.</span>")
+	to_chat(H, SPAN_NOTICE("You start acting clumsy to throw suspicions off. Focus again before using weapons."))
 
 /datum/action/innate/toggle_clumsy/Deactivate()
 	var/mob/living/carbon/human/H = owner
@@ -477,7 +556,7 @@
 	active = FALSE
 	background_icon_state = "bg_default"
 	build_all_button_icons()
-	to_chat(H, "<span class='notice'>You focus and can now use weapons regularly.</span>")
+	to_chat(H, SPAN_NOTICE("You focus and can now use weapons regularly."))
 
 /datum/job/mime
 	title = "Mime"
@@ -496,6 +575,9 @@
 	)
 	outfit = /datum/outfit/job/mime
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = EASY_DIFFICULTY
+	description = "The Mime has the responsibility of entertaining the crew non-verbally.\n\n\
+					Difficulties: Emotes"
 
 /datum/outfit/job/mime
 	name = "Mime"
@@ -555,6 +637,9 @@
 	alt_titles = list("Custodial Technician")
 	outfit = /datum/outfit/job/janitor
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = EASY_DIFFICULTY
+	description = "Janitors have the responsibility of cleaning the station.\n\n\
+					Difficulties: cleaning, lights replacement, movement, controls"
 
 /datum/outfit/job/janitor
 	name = "Janitor"
@@ -594,22 +679,19 @@
 	alt_titles = list("Journalist")
 	outfit = /datum/outfit/job/librarian
 	standard_paycheck = CREW_PAY_LOW
+	difficulty = EASY_DIFFICULTY
+	description = "The Librarian has the responsibility of providing books for the crew.\n\n\
+					Difficulties: Paperwork, controls"
 
 /datum/outfit/job/librarian
 	name = "Librarian"
 	jobtype = /datum/job/librarian
 
 	uniform = /obj/item/clothing/under/rank/civilian/librarian
+	suit = /obj/item/clothing/suit/librarian
 	l_ear = /obj/item/radio/headset/headset_service
-	l_pocket = /obj/item/laser_pointer
-	r_pocket = /obj/item/barcodescanner
-	l_hand = /obj/item/storage/bag/books
 	id = /obj/item/card/id/librarian
 	pda = /obj/item/pda/librarian
-	backpack_contents = list(
-		/obj/item/videocam/advanced = 1,
-		/obj/item/clothing/suit/armor/vest/press = 1
-)
 
 /datum/outfit/job/librarian/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

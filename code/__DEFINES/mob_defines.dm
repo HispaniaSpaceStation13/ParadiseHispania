@@ -248,16 +248,16 @@
 
 #define isdog(A)			(istype((A), /mob/living/simple_animal/pet/dog))
 #define iscorgi(A)			(istype((A), /mob/living/simple_animal/pet/dog/corgi))
-#define ismouse(A)			(istype((A), /mob/living/simple_animal/mouse))
+#define ismouse(A)			(istype((A), /mob/living/basic/mouse))
 #define isbot(A)			(istype((A), /mob/living/simple_animal/bot))
 #define isguardian(A)		(istype((A), /mob/living/simple_animal/hostile/guardian))
-#define isnymph(A)      	(istype((A), /mob/living/simple_animal/diona))
+#define isnymph(A)      	(istype((A), /mob/living/basic/diona_nymph))
 #define iscaterpillar(A)	(istype((A), /mob/living/basic/nian_caterpillar))
 #define ishostile(A) 		(istype((A), /mob/living/simple_animal/hostile))
 #define isretaliate(A) 		(istype((A), /mob/living/simple_animal/hostile/retaliate))
-#define isterrorspider(A) 	(istype((A), /mob/living/simple_animal/hostile/poison/terror_spider))
-#define isslaughterdemon(A) (istype((A), /mob/living/simple_animal/demon/slaughter))
-#define isdemon(A) 			(istype((A), /mob/living/simple_animal/demon))
+#define isterrorspider(A) 	(istype((A), /mob/living/simple_animal/hostile/poison/terror_spider) || istype((A), /mob/living/basic/spiderling/terror_spiderling))
+#define isslaughterdemon(A) (istype((A), /mob/living/basic/demon/slaughter))
+#define isdemon(A) 			(istype((A), /mob/living/basic/demon))
 #define iscat(A) 			(istype((A), /mob/living/simple_animal/pet/cat))
 #define isgorilla(A) 		(istype((A), /mob/living/basic/gorilla))
 #define ismorph(A)			(istype((A), /mob/living/simple_animal/hostile/morph))
@@ -410,6 +410,7 @@
 #define GHOST_SEE_RADS				(1 << 5) // Ghost can see radiation
 #define GHOST_GAS_SCAN				(1 << 6) // Ghost uses gas analyzer on click
 #define GHOST_PLANT_ANALYZER		(1 << 7) // Ghost uses plant analyzer on click
+#define GHOST_NO_VISION				(1 << 8) // Ghost cannot see any ghosts at all
 
 #define GHOST_FLAGS_DEFAULT (GHOST_CAN_REENTER | GHOST_RESPAWNABLE | GHOST_VISION)
 #define GHOST_FLAGS_START_AS_OBSERVER (GHOST_FLAGS_DEFAULT | GHOST_START_AS_OBSERVER)
