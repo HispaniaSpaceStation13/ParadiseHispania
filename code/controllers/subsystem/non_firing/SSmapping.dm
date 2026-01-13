@@ -60,10 +60,10 @@ SUBSYSTEM_DEF(mapping)
 			map_datum = text2path(lines[1])
 			map_datum = new map_datum
 		catch
-			map_datum = new /datum/map/boxstationHispania // Assume cyberiad custom if non-existent
+			map_datum = new /datum/map/boxstation // Assume cyberiad custom if non-existent
 		fdel("data/next_map.txt") // Remove to avoid the same map existing forever
 	else
-		map_datum = new /datum/map/boxstationHispania // Assume cyberiad custom if non-existent
+		map_datum = new /datum/map/boxstation // Assume cyberiad custom if non-existent
 	if(fexists("data/last_map.txt"))
 		var/list/lines = file2list("data/last_map.txt")
 		// Check its valid
