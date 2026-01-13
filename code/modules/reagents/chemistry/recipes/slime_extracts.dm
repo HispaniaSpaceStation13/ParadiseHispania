@@ -103,8 +103,8 @@
 /datum/chemical_reaction/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(SPAN_DANGER("The slime extract begins to vibrate violently!"))
 	if(SSmobs.xenobiology_mobs < MAX_GOLD_CORE_MOBS)
-		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 5, "Gold Slime", HOSTILE_SPAWN, "chemicalsummon", TRUE, TRUE), 50)
-		SSmobs.xenobiology_mobs += 5
+		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Gold Slime", HOSTILE_SPAWN, "chemicalsummon", TRUE, TRUE), 50)
+		SSmobs.xenobiology_mobs += 3
 	else
 		T.visible_message(SPAN_DANGER("The slime extract sputters out, there's too many mobs to make any more!"))
 
@@ -116,8 +116,8 @@
 /datum/chemical_reaction/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(SPAN_DANGER("The slime extract begins to vibrate violently!"))
 	if(SSmobs.xenobiology_mobs < MAX_GOLD_CORE_MOBS)
-		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral", TRUE, TRUE), 50)
-		SSmobs.xenobiology_mobs += 3
+		addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 1, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral", TRUE, TRUE), 50)
+		SSmobs.xenobiology_mobs += 1
 	else
 		T.visible_message(SPAN_DANGER("The slime extract sputters out, there's too many mobs to make any more!"))
 
