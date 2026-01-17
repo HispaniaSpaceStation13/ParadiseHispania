@@ -19,7 +19,7 @@
 	/// Forbid players from rejoining if they use AntagHUD?
 	var/restrict_antag_hud_rejoin = TRUE
 	/// Enable respawns by default?
-	var/respawn_enabled = TRUE
+	var/respawn_enabled = FALSE
 	/// Enable CID randomiser buster?
 	var/enabled_cid_randomiser_buster = FALSE
 	/// Forbid admins from posessing and flying the singulo round
@@ -45,7 +45,7 @@
 	/// Amount of loadout points non-donors should get
 	var/base_loadout_points = 5
 	/// Respawnability loss penalty for eary cryoing (minutes)
-	var/cryo_penalty_period = 30
+	var/cryo_penalty_period = 60
 	/// Observers count as roundstart if they join from the main menu before this time (in minutes). Set to 0 to allow only-pregame start observers.
 	var/roundstart_observer_period = 5
 	/// Enable OOC emojis?
@@ -85,7 +85,7 @@
 	/// Time for a brain to keep its spark of life (deciseconds)
 	var/revival_brain_life = 10 MINUTES
 	/// Time to wait before you can respawn as a new character.
-	var/respawn_delay = 10 MINUTES
+	var/respawn_delay = 60 MINUTES
 	/// Enable random AI lawsets from the default=TRUE pool
 	var/random_ai_lawset = TRUE
 	/// Enable weather events initialized by SSweather. New weather events can still
